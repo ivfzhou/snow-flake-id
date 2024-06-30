@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-type generator struct {
+type Generator struct {
 	machineID, sequence, timestamp int64
 	lock                           sync.Mutex
 }
@@ -36,18 +36,18 @@ const (
 )
 
 // NewGenerator 创建一个生成 ID 对象。每个节点的 machineID 必须不同。
-func NewGenerator(machineID int64) *generator {
+func NewGenerator(machineID int64) *Generator {
 	if machineID > maxMachineID {
 		panic("机器 ID 过大")
 	}
-	return &generator{
+	return &Generator{
 		machineID: machineID,
 		timestamp: time.Now().UnixMilli(),
 	}
 }
 
 // Generate 雪花算法生成 ID。41 位毫秒时间戳，10 位工作机器 ID，12 位序列号。
-func (g *generator) Generate() int64 {
+func (g *Generator) Generate() int64 {
 	g.lock.Lock()
 	defer g.lock.Unlock()
 
@@ -73,7 +73,7 @@ func (g *generator) Generate() int64 {
 	return g.timestamp<<timestampShiftBits | g.machineID<<machineIDShiftBits | g.sequence
 }
 
-func (g *generator) nextTime(timestamp int64) int64 {
+func (g *Generator) nextTime(timestamp int64) int64 {
 	for {
 		t := time.Now().UnixMilli()
 

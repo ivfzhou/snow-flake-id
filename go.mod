@@ -10,4 +10,4 @@
 
 module gitee.com/ivfzhou/snow_flake_id
 
-go 1.21
+go 1.18
