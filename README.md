@@ -17,5 +17,4 @@ generator := sfi.NewGenerator(machineID)
 
 // 生成唯一id
 generator.Generate()
-
 ```
