@@ -5,7 +5,7 @@
 64 位比特使用说明：41 位毫秒时间戳，10 位工作机器 ID，12 位序列号，头一位未使用。
 
 [![codecov](https://codecov.io/gh/ivfzhou/snow-flake-id/graph/badge.svg?token=QYBRAOTH5K)](https://codecov.io/gh/ivfzhou/snow-flake-id)
-[![Go Reference](https://pkg.go.dev/badge/gitee.com/ivfzhou/snow-flake-id/v3.svg)](https://pkg.go.dev/gitee.com/ivfzhou/snow-flake-id/v3)
+[![Go Reference](https://pkg.go.dev/badge/gitee.com/ivfzhou/snow-flake-id.svg)](https://pkg.go.dev/gitee.com/ivfzhou/snow-flake-id)
 
 # 二、使用
 
