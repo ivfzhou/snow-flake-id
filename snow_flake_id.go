@@ -27,9 +27,9 @@ const (
 	sequenceBits  = 12
 	timestampBits = 41
 
-	maxMachineID   = 1<<machineBits - 1
-	maxSequenceNum = 1<<sequenceBits - 1
-	maxTimestamp   = 1<<timestampBits - 1
+	maximumMachineID   = 1<<machineBits - 1
+	maximumSequenceNum = 1<<sequenceBits - 1
+	maximumTimestamp   = 1<<timestampBits - 1
 
 	timestampShiftBits = machineBits + sequenceBits
 	machineIDShiftBits = sequenceBits
@@ -37,8 +37,8 @@ const (
 
 // NewGenerator 创建一个生成 ID 对象。每个节点的 machineID 必须不同。
 func NewGenerator(machineID int64) *Generator {
-	if machineID > maxMachineID {
-		panic("机器 ID 过大")
+	if machineID > maximumMachineID {
+		panic("machine id to big")
 	}
 	return &Generator{
 		machineID: machineID,
@@ -47,6 +47,7 @@ func NewGenerator(machineID int64) *Generator {
 }
 
 // Generate 雪花算法生成 ID。41 位毫秒时间戳，10 位工作机器 ID，12 位序列号。
+// 可以并法调用。
 func (g *Generator) Generate() int64 {
 	g.lock.Lock()
 	defer g.lock.Unlock()
@@ -57,7 +58,7 @@ func (g *Generator) Generate() int64 {
 	}
 
 	if t == g.timestamp {
-		g.sequence = (g.sequence + 1) & maxSequenceNum
+		g.sequence = (g.sequence + 1) & maximumSequenceNum
 		if g.sequence == 0 {
 			g.timestamp = g.nextTime(t + 1)
 		}
@@ -66,8 +67,8 @@ func (g *Generator) Generate() int64 {
 		g.timestamp = t
 	}
 
-	if g.timestamp > maxTimestamp {
-		panic("时间超位")
+	if g.timestamp > maximumTimestamp {
+		panic("time stamp too big")
 	}
 
 	return g.timestamp<<timestampShiftBits | g.machineID<<machineIDShiftBits | g.sequence

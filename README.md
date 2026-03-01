@@ -7,10 +7,10 @@
 # 二、使用
 
 ```golang
-import flakeid "gitee.com/ivfzhou/snow_flake_id"
+import sfi "gitee.com/ivfzhou/snow_flake_id"
 
 // 创建一个生成 ID 对象。每个节点的 machineID(ip) 必须不同。
-generator := flakeid.NewGenerator(machineID)
+generator := sfi.NewGenerator(machineID)
 
 // 生成唯一id
 generator.Generate()
